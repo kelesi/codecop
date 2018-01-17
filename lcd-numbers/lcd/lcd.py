@@ -47,7 +47,7 @@ class LcdDisplay(object):
 
     def assemble_numbers(self, numbers):
         lcd_number = []
-        for index in xrange(5*self._scaling):
+        for index in xrange(3+2*self._scaling):
             lcd_number.append(self._assemble_line(index, numbers))
         return lcd_number
 
@@ -55,7 +55,7 @@ class LcdDisplay(object):
         line = ""
         for number in str(numbers):
             digit = self._digits.get_digit(number)
-            line += digit.get_line(index)
+            line += digit.scale(self._scaling)[index]
         return line
 
 

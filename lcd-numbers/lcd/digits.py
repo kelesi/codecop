@@ -4,7 +4,20 @@ class Digit(object):
         self._digit_representation = representation
 
     def scale(self, scale_factor=1):
-        pass
+        scaled_lines = []
+        for line in self._digit_representation:
+            scaled_lines.append(line[0] + line[1]*scale_factor + line[2])
+
+        scaled_digit = []
+        scaled_digit.append(scaled_lines[0])
+        for i in xrange(scale_factor):
+            scaled_digit.append(scaled_lines[1])
+        scaled_digit.append(scaled_lines[2])
+        for i in xrange(scale_factor):
+            scaled_digit.append(scaled_lines[3])
+        scaled_digit.append(scaled_lines[4])
+
+        return scaled_digit
 
     def get_representation(self):
         return self._digit_representation

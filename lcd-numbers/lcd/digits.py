@@ -1,6 +1,5 @@
 class Digit(object):
-    def __init__(self, digit, representation):
-        self._digit = digit
+    def __init__(self, representation):
         self._digit_representation = representation
 
     def scale(self, scale_factor=1):
@@ -19,7 +18,7 @@ class Digit(object):
             scaled_digit.append(scaled_lines[3])
         scaled_digit.append(scaled_lines[4])
 
-        return Digit(self._digit, scaled_digit)
+        return Digit(scaled_digit)
 
     def get_representation(self):
         return self._digit_representation
@@ -27,26 +26,23 @@ class Digit(object):
 
 class Digits(object):
     def __init__(self, digit_representations, scale_factor=1):
-        self._digits = [Digit(i, representation).scale(scale_factor)
-                        for i, representation in enumerate(digit_representations)]
-        self._scale_factor = scale_factor
+        self._digits = [Digit(representation).scale(scale_factor)
+                        for _, representation in enumerate(digit_representations)]
 
     def get_digit(self, digit):
         return self._digits[int(digit)] #This is an indexed getter
 
     def assemble_numbers(self, numbers):
-        lcd_number = []
-        line_count = 3+2*self._scale_factor
-        for index in xrange(line_count):
-            lcd_number.append(self._assemble_line(index, numbers))
-        return lcd_number
+        def concat_lists(list1, list2):
+            if list1 is None:
+                return list2
+            return [a+b for a, b in zip(list1, list2)]
 
-    def _assemble_line(self, index, numbers):
-        line = ""
+        new_representation = None
         for number in str(numbers):
             digit = self.get_digit(number)
-            line += digit.get_representation()[index]
-        return line
+            new_representation = concat_lists(new_representation, digit.get_representation())
+        return new_representation
 
     def print_numbers(self, numbers, printer):
         for line in self.assemble_numbers(numbers):

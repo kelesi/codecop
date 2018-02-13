@@ -5,9 +5,9 @@ from lcd.lcd import Configuration
 
 
 class TestDigits(unittest.TestCase):
-    def _get_digits(self):
+    def _get_digits(self, scaling=1):
         digit_reader = lcd.digits.DigitReader(Configuration.RESOURCE_DIRECTORY)
-        digits = digit_reader.read_digits()
+        digits = digit_reader.read_digits(scaling)
         return digits
 
     @parameterized.expand([[0], [1], [2], [3], [4], [5], [6], [7], [8], [9]])
@@ -41,3 +41,17 @@ class TestDigits(unittest.TestCase):
                            " -- "]
 
         self.assertEquals(scaled_digit, resulting_digit, "Scaling 5 is wrong %s" % str(scaled_digit))
+
+    def test_assemble_numbers(self):
+        digits = self._get_digits(2)
+        expected = [
+            '     --  --      --  --  --  --  --  -- ',
+            '   |   |   ||  ||   |      ||  ||  ||  |',
+            '   |   |   ||  ||   |      ||  ||  ||  |',
+            '     --  --  --  --  --      --  --     ',
+            '   ||      |   |   ||  |   ||  |   ||  |',
+            '   ||      |   |   ||  |   ||  |   ||  |',
+            '     --  --      --  --      --  --  -- ',
+        ]
+        self.assertEquals(expected, digits.assemble_numbers('1234567890'))
+

@@ -23,8 +23,16 @@ class ArgumentParser(object):
                 raise argparse.ArgumentTypeError("%s is an invalid value (allowed > 1)" % value)
             return i
 
+        def validate_argument_number(value):
+            """Validate the scale command line argument as int > 0"""
+            if value.isdigit() is False:
+                raise argparse.ArgumentTypeError(
+                    "%s is an invalid value (only digits allowed)" % value
+                )
+            return value
+
         parser = argparse.ArgumentParser(description="Print numbers as LCD")
-        parser.add_argument("number", help="number", type=int)
+        parser.add_argument("number", help="number", type=validate_argument_number)
         parser.add_argument("-s", "--scale", type=validate_argument_scale,
                             default=2, help="Scale the numbers by number")
         return parser

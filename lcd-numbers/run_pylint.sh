@@ -1,5 +1,4 @@
 #!/bin/sh
-
-export PYTHONPATH=pylint:$PYTHONPATH
-echo $PYTHONPATH
+# run Object Calisthenics rules against lcd
+export PYTHONPATH=pylint/checkers:$PYTHONPATH
 pylint --rcfile ./objectcalisthenics.pylintrc lcd

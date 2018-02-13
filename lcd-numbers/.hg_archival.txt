@@ -1,0 +1,6 @@
+repo: 25888b687b675e19ebadf59cc668e8b8a1619620
+node: ab52032a0ee254f80a70f591a98c70a7ece4a13d
+branch: default
+latesttag: workshop-1
+latesttagdistance: 44
+changessincelatesttag: 44
